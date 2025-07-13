@@ -6,14 +6,12 @@ std::vector<int> d;
 
 void dijkstra(int start) {
     d[start] = 0;
-    std::priority_queue<std::pair<int, int>,
-        std::vector<std::pair<int, int>>,
-        std::greater<>> pq;
+    std::priority_queue<std::pair<int, int>> pq;
 
-    pq.push({ 0, start });  // 시작 노드: 거리 0
+    pq.push({ 0, start });
 
     while (!pq.empty()) {
-        int distance = pq.top().first;
+        int distance = -pq.top().first;
         int current = pq.top().second;
         pq.pop();
 
@@ -25,7 +23,7 @@ void dijkstra(int start) {
 
             if (nextDistance < d[next]) {
                 d[next] = nextDistance;
-                pq.push({ nextDistance, next });
+                pq.push({ -nextDistance, next });
             }
         }
     }
