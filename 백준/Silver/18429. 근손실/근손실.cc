@@ -6,7 +6,7 @@ int N, M, res;
 vector<int> v;
 vector<bool> visited;
 
-void DFS(int kit, int weight, int days) {
+void DFS(int weight, int days) {
 	if (weight < 500)
 		return;
 
@@ -15,15 +15,13 @@ void DFS(int kit, int weight, int days) {
 		return;
 	}
 
-	if (visited[kit]) return;
-	visited[kit] = true;
-	
 	for (int i = 0; i < N; i++) {
 		if (visited[i]) continue;
-		DFS(i, weight - M + v[i], days + 1);
+		visited[i] = true;
+		DFS(weight - M + v[i], days + 1);
+		visited[i] = false;
 	}
 
-	visited[kit] = false;
 }
 
 int main() {
@@ -34,8 +32,7 @@ int main() {
 	for (int i = 0; i < N; i++)
 		cin >> v[i];
 
-	for (int i = 0; i < N; i++) 
-		DFS(i, 500 - M + v[i], 1);
+	DFS(500, 0);
 
 	cout << res << '\n';
 
